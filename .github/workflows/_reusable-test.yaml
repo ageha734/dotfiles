@@ -17,5 +17,5 @@ jobs:
 
         - name: Install and initialize chezmoi
           run: |
-              sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply https://github.com/ageha734/dotfiles.git
+              sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --source=${{ github.workspace }}
               bash <(curl -fsSL https://moonrepo.dev/install/proto.sh)
