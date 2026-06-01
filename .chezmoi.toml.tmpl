@@ -1,0 +1,38 @@
+{{- $email := "" -}}
+{{- if hasKey . "email" -}}
+{{-   $email = .email -}}
+{{- else if env "CHEZMOI_EMAIL" -}}
+{{-   $email = env "CHEZMOI_EMAIL" -}}
+{{- else if env "CI" -}}
+{{-   $email = "github-actions[bot]@users.noreply.github.com" -}}
+{{- else -}}
+{{-   $email = promptString "email" -}}
+{{- end -}}
+
+{{- $work := false -}}
+{{- if hasKey . "work" -}}
+{{-   $work = .work -}}
+{{- else if env "CHEZMOI_WORK" -}}
+{{-   $work = eq (env "CHEZMOI_WORK") "true" -}}
+{{- else if env "CI" -}}
+{{-   $work = true -}}
+{{- else -}}
+{{-   $work = promptBool "work" -}}
+{{- end -}}
+
+{{- $hostname := .chezmoi.hostname -}}
+
+[data]
+    email = {{ $email | quote }}
+    work = {{ $work }}
+    hostname = {{ $hostname | quote }}
+
+[passwordManager]
+command = "op"
+
+[diff]
+pager = "delta"
+
+[merge]
+command = "nvim"
+args = ["-d", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}"]

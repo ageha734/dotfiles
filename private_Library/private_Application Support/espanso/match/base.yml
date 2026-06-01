@@ -1,0 +1,118 @@
+# espanso match file
+
+matches:
+- trigger: ':d'
+  replace: '{{mydate}}'
+  vars:
+  - name: mydate
+    type: date
+    params:
+        format: '%Y/%m/%d'
+
+- trigger: ':dd'
+  replace: '{{mydate}}'
+  vars:
+  - name: mydate
+    type: date
+    params:
+        format: '%Y-%m-%d'
+
+- trigger: ':dt'
+  replace: '{{mydate}}'
+  vars:
+  - name: mydate
+    type: date
+    params:
+        format: '%Y-%m-%dT%H:%M:%S+09:00'
+
+- trigger: ':ts'
+  replace: '{{mydate}}'
+  vars:
+  - name: mydate
+    type: date
+    params:
+        format: '%H:%M:%S'
+
+# ─── Email & Personal ─────────────────────────────────────
+- trigger: ':mail'
+  replace: 'hibi-keita@dmm.com'
+
+- trigger: ':gh'
+  replace: 'https://github.com/ageha734'
+
+# ─── Markdown ─────────────────────────────────────────────
+- trigger: ':cb'
+  replace: "```$|$\n```"
+
+- trigger: ':cbgo'
+  replace: "```go\n$|$\n```"
+
+- trigger: ':cbts'
+  replace: "```typescript\n$|$\n```"
+
+- trigger: ':cbsh'
+  replace: "```bash\n$|$\n```"
+
+- trigger: ':cbpy'
+  replace: "```python\n$|$\n```"
+
+- trigger: ':detail'
+  replace: "<details>\n<summary>$|$</summary>\n\n</details>"
+
+- trigger: ':table'
+  replace: "| Column1 | Column2 | Column3 |\n| ------- | ------- | ------- |\n| $|$     |         |         |"
+
+# ─── Git ──────────────────────────────────────────────────
+- trigger: ':gfix'
+  replace: 'git commit --fixup=$|$'
+
+- trigger: ':gri'
+  replace: 'git rebase -i --autosquash $|$'
+
+# ─── Development Shortcuts ────────────────────────────────
+- trigger: ':todo'
+  replace: '// TODO(ageha734): $|$'
+
+- trigger: ':fixme'
+  replace: '// FIXME(ageha734): $|$'
+
+- trigger: ':uuid'
+  replace: '{{output}}'
+  vars:
+  - name: output
+    type: shell
+    params:
+        cmd: "uuidgen | tr '[:upper:]' '[:lower:]'"
+
+# ─── Symbols & Typography ─────────────────────────────────
+- trigger: ':arrow'
+  replace: '→'
+
+- trigger: ':larrow'
+  replace: '←'
+
+- trigger: ':check'
+  replace: '✓'
+
+- trigger: ':cross'
+  replace: '✗'
+
+- trigger: ':shrug'
+  replace: '¯\_(ツ)_/¯'
+
+# ─── Japanese ─────────────────────────────────────────────
+- trigger: ':otsu'
+  replace: 'お疲れ様です。'
+
+- trigger: ':yoroshiku'
+  replace: 'よろしくお願いいたします。'
+
+- trigger: ':kakunin'
+  replace: 'ご確認お願いいたします。'
+
+- trigger: ':taiou'
+  replace: 'ご対応ありがとうございます。'
+
+# ─── Lorem ────────────────────────────────────────────────
+- trigger: ':lorem'
+  replace: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'

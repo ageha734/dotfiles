@@ -1,0 +1,5 @@
+search_shortcut: "off"
+search_trigger: ":help"
+toggle_key: CTRL
+show_icon: true
+show_notifications: true

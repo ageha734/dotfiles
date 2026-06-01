@@ -1,0 +1,104 @@
+[include]
+    path = ~/.config/delta/delta-themes.gitconfig
+[user]
+	name = ageha734
+	email = {{ .email }}
+	signingkey = {{ .git.signingkey }}
+[github]
+	user = ageha734
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+	defaultKeyCommand = ssh-add -L
+[ghq]
+	root = {{ .chezmoi.homeDir }}/Repository
+[column]
+    ui = auto
+[branch]
+    sort = -committerdate
+[tag]
+	sort = version:refname
+	gpgSign = true
+[init]
+	defaultBranch = main
+	templatedir = ~/.git-templates/git-secrets
+[diff]
+	tool = difftastic
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
+[difftool]
+    prompt = false
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+[delta]
+    features = side-by-side line-numbers decorations Catppuccin-mocha
+    navigate = true
+[interactive]
+    diffFilter = delta --color-only
+[push]
+	default = simple
+	autoSetupRemote = true
+	followTags = true
+[pull]
+	rebase = true
+[merge]
+	conflictstyle = zdiff3
+[fetch]
+    prune = true
+    pruneTags = true
+    all = true
+[help]
+	autocorrect = prompt
+[commit]
+	verbose = true
+	gpgSign = true
+	template = ~/.config/git/commit-template.txt
+[rerere]
+	enabled = true
+	autoupdate = true
+[core]
+    pager = delta
+	excludesfile = ~/.gitignore
+	fsmonitor = true
+	untrackedCache = true
+	editor = nvim
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+[credential]
+	helper = osxkeychain
+[secrets]
+	providers = git secrets --aws-provider
+	patterns = (A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}
+	patterns = (\"|')?(AWS|aws|Aws)?_?(SECRET|secret|Secret)?_?(ACCESS|access|Access)?_?(KEY|key|Key)(\"|')?\\s*(:|=>|=)\\s*(\"|')?[A-Za-z0-9/\\+=]{40}(\"|')?
+	patterns = (\"|')?(AWS|aws|Aws)?_?(ACCOUNT|account|Account)_?(ID|id|Id)?(\"|')?\\s*(:|=>|=)\\s*(\"|')?[0-9]{4}\\-?[0-9]{4}\\-?[0-9]{4}(\"|')?
+	patterns = private_key
+	patterns = private_key_id
+[alias]
+	# Status & log
+	st       = status --short --branch
+	lg       = log --oneline --graph --decorate --all
+	lga      = log --oneline --graph --decorate
+	staged   = diff --staged
+	unstage  = restore --staged
+	amend    = commit --amend --no-edit
+	# Branch cleanup (merged only)
+	cleanup  = !git branch --merged | grep -v '\\*\\|main\\|master\\|develop' | xargs git branch -d
+	# PR checkout via gh
+	pr       = !gh pr checkout $1
+	# Worktree shortcuts (delegates to fish git-wt function)
+	wt       = worktree
+	wt-list  = worktree list
+	# Security: scan for secrets
+	scan     = secrets --scan
+	# Switch to <branch> after deleting current branch (go back to main first)
+	sw       = "!f() { cur=$(git symbolic-ref --short HEAD); git switch main && git branch -D \"$cur\" && git switch \"$1\"; }; f"

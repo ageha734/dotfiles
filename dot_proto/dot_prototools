@@ -1,0 +1,94 @@
+act = ""
+actionlint =">=1.7.7"
+argocd = ">=3.7.2"
+awscli = ">=2.31.9"
+commitlint = ">=0.10.1"
+dprint = ">=0.50.2"
+gcloud = ">=532.0.0"
+ghalint = ">=1.5.3"
+go = "1.25"
+hadolint = ">=2.14.0"
+helm = ">=3.19.0"
+helmfile = ">=1.1.7"
+hyperfine = ">=1.19.0"
+kubeconform =">=0.7.0"
+kubectl = ">=1.34.1"
+kubectx = ">=0.9.5"
+kustomize =">=5.7.1"
+lefthook = ">=1.13.6"
+moon = ">=1.41.2"
+node = "22"
+npm = "stable"
+pinact = ">=3.4.2"
+python = "3.13"
+ruby = "3.4"
+rust = "1.90"
+sdkman = ">=5.20.0"
+shellcheck = ">=0.11.0"
+shellspec = ""
+shfmt = ">=3.12.0"
+skaffold = ">=2.16.1"
+terraform = ">=1.13.3"
+terraform-docs = ">=0.20.0"
+terraformer = ""
+tflint = ">=0.59.1"
+tilt = ">=0.35.2"
+trivy = ">=0.67.0"
+zizmor = ">=1.14.2"
+
+[plugins]
+act = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/act.toml"
+actionlint = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/actionlint.toml"
+argocd = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/argocd.toml"
+awscli = "github://ageha734/proto-awscli"
+commitlint = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/commitlint.toml"
+dprint = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/dprint.toml"
+gcloud = "github://ageha734/proto-gcloud"
+ghalint = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/ghalint.toml"
+helm = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/helm.toml"
+helmfile = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/helmfile.toml"
+hyperfine = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/hyperfine.toml"
+kubeconform = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/kubeconform.toml"
+kubectl = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/kubectl.toml"
+kubectx = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/kubectx.toml"
+kustomize = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/kustomize.toml"
+lefthook = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/lefthook.toml"
+pinact = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/pinact.toml"
+sdkman = "github://ageha734/proto-sdkman"
+shellcheck = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/shellcheck.toml"
+shellspec = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/shellspec.toml"
+shfmt = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/shfmt.toml"
+skaffold = "github://ageha734/proto-skaffold"
+task = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/task.toml"
+terraform = "github://ageha734/proto-terraform"
+terraform-docs = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/terraform-docs.toml"
+terraformer = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/terraformer.toml"
+terragrunt = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/terragrunt.toml"
+tflint = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/tflint.toml"
+tilt = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/tilt.toml"
+trivy = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/trivy.toml"
+zizmor = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/zizmor.toml"
+
+[settings]
+auto-clean = true
+auto-install = true
+builtin-plugins = true
+detect-strategy = "first-available"
+telemetry = true
+
+[settings.build]
+exclude-packages = []
+install-system-packages = true
+write-log-file = false
+
+[settings.build.system-package-manager]
+
+[settings.http]
+allow-invalid-certs = false
+proxies = []
+secure-proxies = []
+
+[settings.offline]
+custom-hosts = []
+override-default-hosts = false
+timeout = 750

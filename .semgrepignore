@@ -1,0 +1,2 @@
+dot_config/private_fish/functions/__sdkman-noexport-init.sh
+.chezmoiscripts/run_once_before_9-install-fish.sh

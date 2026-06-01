@@ -1,0 +1,32 @@
+name: Reusable Supply Chain
+
+on:
+    workflow_call:
+
+permissions:
+    contents: read
+
+jobs:
+    detect-secrets:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+          with:
+              persist-credentials: false
+        - run: docker compose -f compose.ci.yaml run --rm detect-secrets
+
+    permissions-check:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+          with:
+              persist-credentials: false
+        - run: docker compose -f compose.ci.yaml run --rm permissions-check
+
+    supply-chain:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+          with:
+              persist-credentials: false
+        - run: docker compose -f compose.ci.yaml run --rm supply-chain

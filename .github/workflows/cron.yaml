@@ -1,0 +1,60 @@
+name: 'Cron'
+
+on:
+    schedule:
+    - cron: '0 0 1 * *'
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+jobs:
+    version-audit:
+        uses: ./.github/workflows/_reusable-version-audit.yaml
+        permissions:
+            contents: read
+            issues: write
+
+    security:
+        uses: ./.github/workflows/_reusable-security.yaml
+
+    trivy:
+        uses: ./.github/workflows/_reusable-trivy.yaml
+
+    semgrep:
+        uses: ./.github/workflows/_reusable-semgrep.yaml
+
+    supply-chain:
+        uses: ./.github/workflows/_reusable-supply-chain.yaml
+
+    test:
+        uses: ./.github/workflows/_reusable-test.yaml
+
+    update-readme:
+        needs:
+        - security
+        - trivy
+        - semgrep
+        - supply-chain
+        - test
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+        - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 # zizmor: ignore[artipacked]
+
+        - name: Update README with latest run date
+          run: |
+              current_date=$(date -u +'%Y年%m月%d日')
+              sed -i '/<!-- last-check-start -->/,/<!-- last-check-end -->/{
+                /<!-- last-check-start -->/!{/<!-- last-check-end -->/!d}
+              }' README.md
+              sed -i "/<!-- last-check-start -->/a\\
+              ✅ **${current_date}** に動作確認済み\\
+              🔒 **${current_date}** にセキュリティ確認済み" README.md
+
+        - name: Commit and push
+          uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
+          with:
+              commit_message: 'docs: 最終動作確認日とセキュリティ確認日を更新'
+              file_pattern: README.md

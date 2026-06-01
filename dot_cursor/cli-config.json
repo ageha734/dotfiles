@@ -1,0 +1,34 @@
+{
+    "editor": {
+        "vimMode": false
+    },
+    "hasChangedDefaultModel": false,
+    "network": {
+        "useHttp1ForAgent": false
+    },
+    "permissions": {
+        "allow": [
+            "Shell(ls)",
+            "Shell(git)"
+        ],
+        "deny": [
+            "Shell(rm)",
+            "Read(/etc/passwd)",
+            "Read(.env*)",
+            "Read(token.json)",
+            "Read(credentials.json)",
+            "Read(**/*.key)",
+            "Write(/etc/passwd)",
+            "Write(.env*)",
+            "Write(token.json)",
+            "Write(credentials.json)",
+            "Write(**/*.key)"
+        ]
+    },
+    "privacyCache": {
+        "ghostMode": true,
+        "privacyMode": 2,
+        "updatedAt": 1769743626115
+    },
+    "version": 1
+}

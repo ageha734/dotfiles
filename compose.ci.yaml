@@ -1,0 +1,208 @@
+services:
+    actionlint:
+        image: rhysd/actionlint@sha256:b1934ee5f1c509618f2508e6eb47ee0d3520686341fec936f3b79331f9315667 # 1.7.12
+        working_dir: /work
+        volumes:
+        - .:/work:ro
+        command: ['-color']
+
+    zizmor:
+        image: ghcr.io/woodruffw/zizmor@sha256:3d53be4e0f48952112aa4ca00f45e724b70598082e7202c5c412a6779ca38134 # 1.7.0
+        working_dir: /work
+        volumes:
+        - .:/work:ro
+        command: ['.']
+
+    shellcheck:
+        image: koalaman/shellcheck:stable@sha256:bb596a0d169b85ddd81d8b6d3a2ff6d5baf5fca10b97f575ebc647c3dff62b3d # v0.11.0
+        working_dir: /work
+        volumes:
+        - .:/work:ro
+        command:
+        - --severity=warning
+        - .chezmoiscripts/run_after_0_bat.sh
+        - .chezmoiscripts/run_once_before_9-install-fish.sh
+        - .chezmoiscripts/run_onchange_after_10-defaults.sh
+        - .githooks/pre-commit
+        - dot_config/aerospace/executable_presentation.sh
+        - dot_config/borders/executable_bordersrc
+        - dot_git-templates/git-secrets/hooks/executable_commit-msg
+        - dot_git-templates/git-secrets/hooks/executable_pre-commit
+        - dot_git-templates/git-secrets/hooks/executable_prepare-commit-msg
+
+    shfmt:
+        image: mvdan/shfmt:v3.12.0@sha256:307d265ffd25ce832899ae17c93ed5062fc3375c514bba8f52cbf52792735c4d
+        working_dir: /work
+        volumes:
+        - .:/work:ro
+        command: ['-d', '-i', '4', '-ci', '.']
+
+    dprint:
+        image: alpine:3.21@sha256:a8560b36e8b8210634f77d9f7f9efd7ffa463e380b75e2e74aff4511df3ef88c
+        working_dir: /work
+        volumes:
+        - .:/work:ro
+        entrypoint: ['/bin/sh', '-c']
+        command:
+        - |
+              DPRINT_VERSION=0.54.0
+              apk add --no-cache curl unzip
+              ARCH=$(uname -m)
+              if [ "$$ARCH" = "aarch64" ]; then
+                DPRINT_ARCH="aarch64-unknown-linux-musl"
+              else
+                DPRINT_ARCH="x86_64-unknown-linux-musl"
+              fi
+              curl -fsSL \
+                "https://github.com/dprint/dprint/releases/download/$${DPRINT_VERSION}/dprint-$${DPRINT_ARCH}.zip" \
+                -o /tmp/dprint.zip
+              unzip -o /tmp/dprint.zip -d /usr/local/bin
+              chmod +x /usr/local/bin/dprint
+              dprint check --config dprint.json
+
+    security:
+        image: trufflesecurity/trufflehog@sha256:9cc33bb080cac0efbbf228a17667172875b529eeeab01efcc4697adfb55f568a # latest
+        working_dir: /work
+        volumes:
+        - .:/work:ro
+        command: ['filesystem', '--directory=.', '--only-verified']
+
+    gitleaks:
+        image: zricethezav/gitleaks:v8.30.0@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9
+        working_dir: /work
+        volumes:
+        - .:/work:ro
+        command: ['dir', '--config', '.gitleaks.toml', '-v', '--redact', '.']
+
+    gitleaks-git:
+        image: zricethezav/gitleaks:v8.30.0@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9
+        working_dir: /work
+        volumes:
+        - .:/work
+        entrypoint: ['/bin/sh', '-c']
+        command:
+        - |
+              git config --global --add safe.directory /work
+              gitleaks git --config .gitleaks.toml -v --redact .
+
+    yamllint:
+        image: cytopia/yamllint@sha256:3e9eb827ab2b12a5ea5f49d4257bb3aca94bba9f1ba427c8bc7f2456385a5204 # 1.32.0
+        working_dir: /work
+        volumes:
+        - .:/work:ro
+        command: ['-c', '.yamllint.yaml', '.']
+
+    taplo:
+        image: tamasfe/taplo@sha256:e0e247250609d2c0f3a77bc8003dc21eaa16ffd1b07ef4bad16c35f6845eec2b # latest
+        working_dir: /work
+        volumes:
+        - .:/work:ro
+        command: ['check', '.']
+
+    fish-lint:
+        # amd64 only
+        image: dideler/fish-shell@sha256:238916d7740db1ec0c6e17b6f39393f3617076722a02410266789bd3afe68c96
+        working_dir: /work
+        volumes:
+        - .:/work:ro
+        entrypoint: ['/bin/sh', '-c']
+        command:
+        - |
+              grep -rl --include='*.fish' '' . | grep -v './.git/' | xargs fish --no-execute
+              grep -rl --include='*.fish' '' . | grep -v './.git/' | xargs fish_indent --check
+
+    trivy-config:
+        image: ghcr.io/aquasecurity/trivy:0.67.0@sha256:94711c60051c6cab848a292e3a67f62623fcee361b2bb661f43b17184f4afdac
+        working_dir: /work
+        volumes:
+        - .:/work:ro
+        command: [
+            'fs',
+            '--scanners',
+            'misconfig,secret',
+            '--severity',
+            'HIGH,CRITICAL',
+            '.',
+        ]
+
+    semgrep:
+        image: semgrep/semgrep@sha256:7cad2bc2d1e44f87f0bf4be6d1fa23aa90fb72015bebc89fb91385d813987a03 # latest
+        working_dir: /work
+        volumes:
+        - .:/work:ro
+        command: [
+            'semgrep',
+            'scan',
+            '--config',
+            'auto',
+            '--severity',
+            'WARNING',
+            '--error',
+            '.',
+        ]
+
+    detect-secrets:
+        image: lirantal/detect-secrets@sha256:46fca84a2cada21cd3ab25c2afc1990681e9c3e67bff3e17bd71d2451982b469 # 1.5.0
+        working_dir: /work
+        volumes:
+        - .:/work:ro
+        entrypoint: ['/bin/sh', '-c']
+        command:
+        - |
+              detect-secrets scan --all-files \
+                --exclude-files '\.git/.*' \
+                --exclude-files 'dot_config/private_fish/fish_variables' \
+                --exclude-files 'dot_config/yazi/package\.toml' \
+                --exclude-lines 'secrets_filter' \
+                . | \
+                python3 -c "
+              import sys, json
+              r = json.load(sys.stdin)
+              secrets = r.get('results', {})
+              exit(1) if secrets else exit(0)
+              "
+
+    permissions-check:
+        image: lirantal/detect-secrets@sha256:46fca84a2cada21cd3ab25c2afc1990681e9c3e67bff3e17bd71d2451982b469 # 1.5.0
+        working_dir: /work
+        volumes:
+        - .:/work:ro
+        entrypoint: ['/bin/sh', '-c']
+        command:
+        - |
+              echo "Checking for overly permissive file permissions..."
+              found=false
+              grep -rl --include='*.key' --include='*.pem' '' . | grep -v './.git/' | while read -r f; do
+                echo "::error::Private key file detected: $$f"
+                found=true
+              done
+              if [ "$$found" = true ]; then exit 1; fi
+              echo "Permission checks passed"
+
+    supply-chain:
+        image: lirantal/detect-secrets@sha256:46fca84a2cada21cd3ab25c2afc1990681e9c3e67bff3e17bd71d2451982b469 # 1.5.0
+        working_dir: /work
+        volumes:
+        - .:/work:ro
+        entrypoint: ['/bin/sh', '-c']
+        command:
+        - |
+              echo "Checking for suspicious URLs and supply chain risks..."
+              found=false
+              suspicious_patterns="pastebin\.com|0x0\.st|transfer\.sh|ngrok\.io|requestbin|webhook\.site"
+              results=$(grep -rn --include='*.sh' --include='*.fish' --include='*.yaml' --include='*.yml' --include='*.toml' \
+                -E "$$suspicious_patterns" --exclude-dir=.git --exclude='compose.ci.yaml' . || true)
+              if [ -n "$$results" ]; then
+                echo "::error::Suspicious URLs found:"
+                echo "$$results"
+                found=true
+              fi
+              curl_no_verify=$(grep -rn --include='*.sh' --include='*.fish' \
+                -E 'curl.*-k|curl.*--insecure|wget.*--no-check-certificate' --exclude-dir=.git . || true)
+              if [ -n "$$curl_no_verify" ]; then
+                echo "::error::Insecure download commands (TLS verification disabled):"
+                echo "$$curl_no_verify"
+                found=true
+              fi
+              if [ "$$found" = true ]; then exit 1; fi
+              echo "Supply chain checks passed"

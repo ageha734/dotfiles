@@ -1,0 +1,15 @@
+# ── Bat themes ────────────────────────────────────────────────
+[".config/bat/themes/Catppuccin Mocha.tmTheme"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/bat/refs/heads/main/themes/Catppuccin%20Mocha.tmTheme"
+refreshPeriod = "168h"
+
+[".config/bat/themes/Catppuccin Frappe.tmTheme"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/bat/refs/heads/main/themes/Catppuccin%20Frappe.tmTheme"
+refreshPeriod = "168h"
+
+# ── tmux plugin manager ──────────────────────────────────────
+[".config/tmux/plugins/tpm"]
+type = "git-repo"
+url = "https://github.com/tmux-plugins/tpm.git"

@@ -1,0 +1,26 @@
+name: Reusable Version Audit
+
+on:
+    workflow_call:
+
+permissions:
+    contents: write
+    pull-requests: write
+    issues: write
+
+jobs:
+    version-audit:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+          with:
+              persist-credentials: false
+              fetch-depth: 0
+
+        - uses: ageha734/proto-grove@6138e86551684ad85998d1405bd303d95a024fb8 # v1.0.1
+          with:
+              prototools-path: 'dot_proto/dot_prototools'
+              github-token: ${{ secrets.GITHUB_TOKEN }}
+              branch-prefix: 'deps/proto'
+              automerge-label: 'automerge'
+              dashboard: 'true'

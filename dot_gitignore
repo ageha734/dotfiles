@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+bower_components/
+.idea/
+*.iml
+
+.claude/settings.local.json
+.claude/rules/devcontainer.md

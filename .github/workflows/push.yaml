@@ -1,0 +1,46 @@
+name: 'Push'
+
+on:
+    push:
+        branches:
+        - main
+
+permissions:
+    contents: read
+
+jobs:
+    actionlint:
+        uses: ./.github/workflows/_reusable-actionlint.yaml
+
+    zizmor:
+        uses: ./.github/workflows/_reusable-zizmor.yaml
+
+    shellcheck:
+        uses: ./.github/workflows/_reusable-shellcheck.yaml
+
+    dprint:
+        uses: ./.github/workflows/_reusable-dprint.yaml
+
+    yamllint:
+        uses: ./.github/workflows/_reusable-yamllint.yaml
+
+    taplo:
+        uses: ./.github/workflows/_reusable-taplo.yaml
+
+    fish-lint:
+        uses: ./.github/workflows/_reusable-fish-lint.yaml
+
+    security:
+        uses: ./.github/workflows/_reusable-security.yaml
+
+    trivy:
+        uses: ./.github/workflows/_reusable-trivy.yaml
+
+    semgrep:
+        uses: ./.github/workflows/_reusable-semgrep.yaml
+
+    supply-chain:
+        uses: ./.github/workflows/_reusable-supply-chain.yaml
+
+    test:
+        uses: ./.github/workflows/_reusable-test.yaml

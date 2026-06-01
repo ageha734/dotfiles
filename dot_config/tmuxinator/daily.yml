@@ -1,0 +1,26 @@
+name: daily
+root: ~/
+
+windows:
+- work:
+      layout: even-vertical
+      panes:
+      - clear && neofetch && ide
+- install:
+      layout: tiled
+      panes:
+      - echo "install" && clear && clear
+      - echo "install" && clear && clear
+- zenn:
+      layout: even-horizontal
+      panes:
+      - cd ~/Repository/ageha734/zenn
+- cui:
+      layout: tiled
+      panes:
+      - asciiquarium
+      - gotop
+- chezmoi:
+      layout: even-vertical
+      panes:
+      - cd ~/.local/share/chezmoi/

@@ -1,0 +1,110 @@
+# ═══════════════════════════════════════════════════════════════
+# .chezmoiignore — files NOT managed by chezmoi
+# ═══════════════════════════════════════════════════════════════
+
+# ── Global patterns ───────────────────────────────────────────
+**/.DS_Store
+.keep
+.git
+.github
+.vscode
+.cache
+README.md
+
+# ── Secrets (NEVER commit) ────────────────────────────────────
+.netrc
+
+# ── Home dir: runtime / cache (no value in tracking) ──────────
+.atuin/*
+.bun/*
+.cargo/*
+.cursor/*
+!.cursor/cli-config.json
+.docker/*
+!.docker/config.json
+!.docker/daemon.json
+.go/*
+.gnupg/*
+.gradle/*
+.gsutil/*
+.hawtjni/*
+.idlerc/*
+.k8slens/*
+.kube/*
+.lima/*
+!.lima/default/lima.yaml
+.metals/*
+.npm/*
+.ossindex/*
+.proto/*
+!.proto/.prototools
+.python/*
+.redis-for-vscode/*
+.redocly/*
+.rest-client/*
+.rustup/*
+.sdkman/*
+.skaffold/*
+.ssh/*
+!.ssh/config
+.swiftpm/*
+.terraform.d/*
+.tilt-dev/*
+!.tilt-dev/config
+.vpn/*
+
+# Claude Code
+.claude/*
+.clasprc.json
+.claude.json
+.claude.json.backup
+
+# Codex
+.codex/log/*
+.codex/sessions/*
+.codex/tmp/*
+.codex/skills/*
+.codex/version.json
+
+# Copilot
+.copilot/*
+
+# CodeRabbit
+.coderabbit/auth.json
+.coderabbit/logs/*
+
+# AWS
+.aws/*
+
+# ── Config dir: secrets & runtime ─────────────────────────────
+.config/github-copilot/*
+.config/gh/hosts.yml
+.config/gh-copilot/*
+.config/op/*
+.config/cursor/*
+.config/helm/*
+.config/raycast/*
+.config/rest-client/*
+.config/crossnote/*
+.config/configstore/*
+.config/nvm/*
+.config/gcloud/*
+.config/nvim.log
+
+# Config: only specific files (rest excluded)
+.config/tmux/plugins/*
+.config/karabiner/automatic_backups/*
+.config/nvim/lazy-lock.json
+.config/fish/fish_variables
+
+# ── Library dir ───────────────────────────────────────────────
+Library/Application Support/Cursor/User/*
+!Library/Application Support/Cursor/User/settings.json
+!Library/Application Support/Cursor/User/keybindings.json
+
+Library/Application Support/espanso/*
+!Library/Application Support/espanso/config/default.yml
+!Library/Application Support/espanso/match/base.yml
+
+Library/Application Support/go/*
+!Library/Application Support/go/env

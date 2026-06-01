@@ -1,0 +1,78 @@
+name: Reusable Security
+
+on:
+    workflow_call:
+
+permissions:
+    contents: read
+
+jobs:
+    malicious-files:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+          with:
+              persist-credentials: false
+
+        - name: Malicious file extension check
+          run: |
+              echo "Checking for potentially malicious file extensions..."
+              malicious_extensions=(
+                "*.exe" "*.bat" "*.cmd" "*.com" "*.pif" "*.scr"
+                "*.vbs" "*.vbe" "*.jse" "*.wsf" "*.wsh"
+                "*.msi" "*.dll" "*.scf" "*.lnk" "*.inf"
+              )
+
+              found_malicious=false
+              for ext in "${malicious_extensions[@]}"; do
+                files=$(find . -name "$ext" -not -path "./.git/*" || true)
+                if [ -n "$files" ]; then
+                  echo "::error::Potentially malicious files found ($ext): $files"
+                  found_malicious=true
+                fi
+              done
+
+              if [ "$found_malicious" = true ]; then
+                exit 1
+              fi
+              echo "No malicious file extensions detected"
+
+        - name: Check for specific risky files
+          run: |
+              files_to_check=("nx.js")
+              found_risk=false
+              for file in "${files_to_check[@]}"; do
+                found_files=$(find . -type f -name "$file" -not -path "./.git/*" 2>/dev/null || true)
+                if [ -n "$found_files" ]; then
+                  echo "::error::Risky file detected: $file ($found_files)"
+                  found_risk=true
+                fi
+              done
+
+              if [ "$found_risk" = true ]; then
+                exit 1
+              fi
+              echo "All file checks passed"
+
+    trufflehog:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+          with:
+              persist-credentials: false
+              fetch-depth: 0
+
+        - run: docker compose -f compose.ci.yaml run --rm security
+
+    gitleaks:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+          with:
+              persist-credentials: false
+              fetch-depth: 0
+        - run: docker compose -f compose.ci.yaml run --rm gitleaks
+        - name: Scan git history (diff from default branch)
+          if: github.ref != format('refs/heads/{0}', github.event.repository.default_branch)
+          run: |
+              docker compose -f compose.ci.yaml run --rm gitleaks-git

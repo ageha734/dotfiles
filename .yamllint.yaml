@@ -1,0 +1,14 @@
+extends: relaxed
+
+rules:
+    line-length:
+        max: 150
+        level: warning
+    truthy:
+        check-keys: false
+    empty-lines:
+        max: 1
+
+ignore:
+- .git/
+- dot_claude/

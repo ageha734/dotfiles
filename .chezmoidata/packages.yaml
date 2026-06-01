@@ -1,0 +1,220 @@
+packages:
+    darwin:
+        taps:
+            base:
+            - felixkratz/formulae
+            - nikitabobko/tap
+            personal: []
+            work: []
+
+        brews:
+            base:
+                # Build Tools & Compilers
+                cmake:
+                gcc:
+                llvm:
+
+                # Compression & Archive
+                p7zip:
+                unar:
+                xz:
+
+                # Cryptography & Security
+                ca-certificates:
+                gnutls:
+                gnupg:
+                openssh:
+                openssl@3:
+
+                # Graphics & Image Processing
+                cairo:
+                freetype:
+                harfbuzz:
+                imagemagick:
+                pango:
+                webp:
+
+                # Network & Communication
+                curl:
+                gping:
+                nmap:
+
+                # Text Processing
+                jq:
+                yq:
+                oniguruma:
+                pcre2:
+                tree-sitter:
+
+                # Core Utilities & System
+                coreutils:
+                less:
+                readline:
+
+                # Data & Database
+                sqlite:
+                redis:
+                mysql-client:
+
+                # Audio & Video
+                ffmpeg:
+
+                # Version Control
+                git:
+                git-delta:
+                git-lfs:
+                git-secrets:
+                git-filter-repo:
+                mercurial:
+                fossil:
+
+                # Container & Virtualization
+                skaffold:
+                lima:
+                qemu:
+
+                # Language & Runtime
+                fish:
+                lua:
+                luajit:
+                luarocks:
+                proto:
+
+                # Language Servers
+                typescript-language-server:
+
+                # Documentation & Visualization
+                graphviz:
+                grip:
+
+                # System Administration
+                chezmoi:
+                direnv:
+                mas:
+                topgrade:
+                pinact:
+
+                # General Development
+                asciinema:
+                difftastic:
+                gum:
+                neovim:
+                hurl:
+
+                # Terminal & Shell
+                atuin:
+                bat:
+                bottom:
+                fastfetch:
+                fd:
+                fzf:
+                gh:
+                ghq:
+                htop:
+                lsd:
+                navi:
+                ripgrep:
+                rm-improved:
+                sshs:
+                starship:
+                thefuck:
+                tmux:
+                yazi:
+                zoxide:
+
+                # macOS specific
+                borders:
+                nowplaying-cli:
+                sketchybar:
+                switchaudio-osx:
+                terminal-notifier:
+
+                # Misc
+                ctop:
+                miniserve:
+
+            personal: []
+
+            work:
+                glab:
+
+        casks:
+            base:
+            # Security & Password Management
+            - 1password
+            - 1password-cli
+
+            # Web Browsers
+            - arc
+
+            # System Utilities
+            - cleanshot
+            - dockdoor
+            - espanso
+            - homerow
+            - karabiner-elements
+            - linearmouse
+            - meetingbar
+            - one-switch
+            - raycast
+
+            # Development Tools
+            - cursor
+            - claude-code
+
+            # Cloud & Infrastructure
+            - docker
+            - docker-desktop
+
+            # System Resources & Icons
+            - sf-symbols
+
+            # Terminal & Shell
+            - ghostty
+
+            # File Storage & Sync
+            - google-drive
+
+            # Input Methods
+            - google-japanese-ime
+
+            # Window Management & UI
+            - aerospace
+            - bartender
+            - borders
+            - sketchybar
+
+            # Communication & Social
+            - discord
+
+            # Design & Creative
+            - figma
+
+            # Development IDEs
+            - openlens
+
+            # Audio & Media
+            - boom-3d
+
+            # Fonts - System
+            - font-consolas-for-powerline
+            - font-fira-code
+            - font-hasklig
+            - font-monaspace
+
+            # Fonts - Nerd Fonts
+            - font-0xproto-nerd-font
+            - font-hack-nerd-font
+            - font-hackgen
+            - font-hackgen-nerd
+            - font-jetbrains-mono-nerd-font
+            - font-monaspace-nerd-font
+            - font-monaspice-nerd-font
+            - font-symbols-only-nerd-font
+            - font-sf-mono-nerd-font-ligaturized
+            - font-geist-mono-nerd-font
+            - font-meslo-lg-nerd-font
+            - font-fira-code-nerd-font
+
+            personal: []
+            work: []

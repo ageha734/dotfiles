@@ -1,0 +1,30 @@
+version: 1
+git_protocol: ssh
+editor: nvim
+prompt: enabled
+prefer_editor_prompt: disabled
+pager: delta
+aliases:
+    co: pr checkout
+    openpr: '!gh searchpr $1 | xargs -I ISSUE_NUMBER gh pr view ISSUE_NUMBER --web'
+    searchpr: |-
+        !gh api graphql -F owner=:owner -F repo=:repo -F hash=$1 -f query='
+          query($repo:String\!, $owner:String\!, $hash:String\!) {
+            repository(name: $repo, owner: $owner) {
+              object(expression: $hash) {
+                ... on Commit {
+                  associatedPullRequests(first: 1) {
+                    edges {
+                      node {
+                        number
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ' | jq .data.repository.object.associatedPullRequests.edges[0].node.number
+http_unix_socket:
+browser:
+color_labels: disabled

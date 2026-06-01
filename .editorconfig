@@ -1,0 +1,8 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+
+[dot_config/private_fish/functions/__sdkman-noexport-init.sh]
+ignore = true
