@@ -8,13 +8,13 @@ LIMIT="${QDRANT_MEMORY_RECALL_LIMIT:-8}"
 cat >/dev/null 2>&1 || true
 
 resp=$(curl -s --max-time 6 -X POST \
-  "${QDRANT_URL}/collections/${COLLECTION}/points/scroll" \
-  -H 'Content-Type: application/json' \
-  -d "{\"limit\":${LIMIT},\"with_payload\":true,\"with_vector\":false}" 2>/dev/null) || exit 0
+    "${QDRANT_URL}/collections/${COLLECTION}/points/scroll" \
+    -H 'Content-Type: application/json' \
+    -d "{\"limit\":${LIMIT},\"with_payload\":true,\"with_vector\":false}" 2>/dev/null) || exit 0
 [ -z "$resp" ] && exit 0
 
 if printf '%s' "$resp" | grep -q '"error"'; then
-  exit 0
+    exit 0
 fi
 
 memo=$(printf '%s' "$resp" | python3 -c '
