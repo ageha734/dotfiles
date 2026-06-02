@@ -30,17 +30,17 @@ Mac App Store アプリが必要な場合は Apple ID でログインする。
 
 ## 管理対象
 
-| カテゴリ | 方法 |
-| -------- | ---- |
-| パッケージ | `brew bundle` (`.chezmoidata/packages.yaml`) |
-| dotfiles | chezmoi |
-| fish プラグイン | fisher |
-| ランタイム | proto |
-| tmux プラグイン | tpm |
-| Java/Kotlin | SDKMAN |
-| macOS 設定 | `defaults write` |
-| Cursor 拡張 | `cursor --install-extension` |
-| 外部リソース | `.chezmoiexternal.toml` |
+| カテゴリ        | 方法                                         |
+| --------------- | -------------------------------------------- |
+| パッケージ      | `brew bundle` (`.chezmoidata/packages.yaml`) |
+| dotfiles        | chezmoi                                      |
+| fish プラグイン | fisher                                       |
+| ランタイム      | proto                                        |
+| tmux プラグイン | tpm                                          |
+| Java/Kotlin     | SDKMAN                                       |
+| macOS 設定      | `defaults write`                             |
+| Cursor 拡張     | `cursor --install-extension`                 |
+| 外部リソース    | `.chezmoiexternal.toml`                      |
 
 ## Setup Check
 
