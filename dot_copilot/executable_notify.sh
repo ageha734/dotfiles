@@ -52,13 +52,13 @@ send_notification() {
 
 case "${notification_type}" in
   "permission_prompt")
-    send_notification "🔐 確認が必要です" "Ping"
+    send_notification "🔐 Confirmation required" "Ping"
     ;;
   "elicitation_dialog")
-    send_notification "💬 追加入力が必要です" "Purr"
+    send_notification "💬 Input needed" "Purr"
     ;;
   "agent_completed"|"agent_idle"|"shell_completed"|"shell_detached_completed")
-    send_notification "✅ 完了しました" "Glass"
+    send_notification "✅ Completed" "Glass"
     ;;
   *)
     send_notification "🤖 Copilot" ""
