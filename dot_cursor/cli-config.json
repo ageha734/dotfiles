@@ -1,62 +1,62 @@
 {
-  "version": 1,
-  "editor": {
-    "vimMode": false
-  },
-  "hasChangedDefaultModel": false,
-  "network": {
-    "useHttp1ForAgent": false
-  },
-  "permissions": {
-    "allow": [
-      "Shell(ls)",
-      "Shell(pwd)",
-      "Shell(git)",
-      "Shell(rg)",
-      "Shell(jq)",
-      "Shell(wc)",
-      "Shell(which)",
-      "Shell(tree)",
-      "Read(**/*.md)",
-      "Read(**/*.json)",
-      "Read(**/*.yaml)",
-      "Read(**/*.yml)"
-    ],
-    "deny": [
-      "Shell(rm)",
-      "Shell(chmod:777 *)",
-      "Shell(git reset --hard *)",
-      "Shell(git push --force *)",
-      "Read(/etc/passwd)",
-      "Read(/etc/shadow)",
-      "Read(.env)",
-      "Read(.env*)",
-      "Read(**/.env)",
-      "Read(**/.env*)",
-      "Read(**/*secret*)",
-      "Read(token.json)",
-      "Read(credentials.json)",
-      "Read(**/*.key)",
-      "Read(**/*.pem)",
-      "Read(**/*.p12)",
-      "Read(**/*.pfx)",
-      "Write(/etc/passwd)",
-      "Write(/etc/shadow)",
-      "Write(.env)",
-      "Write(.env*)",
-      "Write(**/.env)",
-      "Write(**/.env*)",
-      "Write(token.json)",
-      "Write(credentials.json)",
-      "Write(**/*.key)",
-      "Write(**/*.pem)",
-      "Write(**/*.p12)",
-      "Write(**/*.pfx)"
-    ]
-  },
-  "privacyCache": {
-    "ghostMode": true,
-    "privacyMode": 2,
-    "updatedAt": 1769743626115
-  }
+    "version": 1,
+    "editor": {
+        "vimMode": false
+    },
+    "hasChangedDefaultModel": false,
+    "network": {
+        "useHttp1ForAgent": false
+    },
+    "permissions": {
+        "allow": [
+            "Shell(ls)",
+            "Shell(pwd)",
+            "Shell(git)",
+            "Shell(rg)",
+            "Shell(jq)",
+            "Shell(wc)",
+            "Shell(which)",
+            "Shell(tree)",
+            "Read(**/*.md)",
+            "Read(**/*.json)",
+            "Read(**/*.yaml)",
+            "Read(**/*.yml)"
+        ],
+        "deny": [
+            "Shell(rm)",
+            "Shell(chmod:777 *)",
+            "Shell(git reset --hard *)",
+            "Shell(git push --force *)",
+            "Read(/etc/passwd)",
+            "Read(/etc/shadow)",
+            "Read(.env)",
+            "Read(.env*)",
+            "Read(**/.env)",
+            "Read(**/.env*)",
+            "Read(**/*secret*)",
+            "Read(token.json)",
+            "Read(credentials.json)",
+            "Read(**/*.key)",
+            "Read(**/*.pem)",
+            "Read(**/*.p12)",
+            "Read(**/*.pfx)",
+            "Write(/etc/passwd)",
+            "Write(/etc/shadow)",
+            "Write(.env)",
+            "Write(.env*)",
+            "Write(**/.env)",
+            "Write(**/.env*)",
+            "Write(token.json)",
+            "Write(credentials.json)",
+            "Write(**/*.key)",
+            "Write(**/*.pem)",
+            "Write(**/*.p12)",
+            "Write(**/*.pfx)"
+        ]
+    },
+    "privacyCache": {
+        "ghostMode": true,
+        "privacyMode": 2,
+        "updatedAt": 1769743626115
+    }
 }
