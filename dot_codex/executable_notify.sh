@@ -12,43 +12,43 @@ get_terminal_bundle_id() {
     fi
 
     case "${TERM_PROGRAM}" in
-    "Apple_Terminal") echo "com.apple.Terminal" ;;
-    "iTerm.app") echo "com.googlecode.iterm2" ;;
-    "ghostty") echo "com.mitchellh.ghostty" ;;
-    *)
-        local pid parent comm
-        pid=$$
-        while [[ "${pid}" -ne 1 ]] 2>/dev/null; do
-            parent=$(ps -p "${pid}" -o ppid= 2>/dev/null | tr -d ' ') || break
-            [[ -z "${parent}" ]] && break
-            comm=$(ps -p "${parent}" -o comm= 2>/dev/null)
-            case "${comm}" in
-            *Terminal*)
-                echo "com.apple.Terminal"
-                return
-                ;;
-            *iTerm*)
-                echo "com.googlecode.iterm2"
-                return
-                ;;
-            *Cursor*)
-                echo "com.todesktop.230313mzl4w4u92"
-                return
-                ;;
-            *Code*)
-                echo "com.microsoft.VSCode"
-                return
-                ;;
-            *ghostty*)
-                echo "com.mitchellh.ghostty"
-                return
-                ;;
-            *) ;;
-            esac
-            pid="${parent}"
-        done
-        echo ""
-        ;;
+        "Apple_Terminal") echo "com.apple.Terminal" ;;
+        "iTerm.app") echo "com.googlecode.iterm2" ;;
+        "ghostty") echo "com.mitchellh.ghostty" ;;
+        *)
+            local pid parent comm
+            pid=$$
+            while [[ "${pid}" -ne 1 ]] 2>/dev/null; do
+                parent=$(ps -p "${pid}" -o ppid= 2>/dev/null | tr -d ' ') || break
+                [[ -z "${parent}" ]] && break
+                comm=$(ps -p "${parent}" -o comm= 2>/dev/null)
+                case "${comm}" in
+                    *Terminal*)
+                        echo "com.apple.Terminal"
+                        return
+                        ;;
+                    *iTerm*)
+                        echo "com.googlecode.iterm2"
+                        return
+                        ;;
+                    *Cursor*)
+                        echo "com.todesktop.230313mzl4w4u92"
+                        return
+                        ;;
+                    *Code*)
+                        echo "com.microsoft.VSCode"
+                        return
+                        ;;
+                    *ghostty*)
+                        echo "com.mitchellh.ghostty"
+                        return
+                        ;;
+                    *) ;;
+                esac
+                pid="${parent}"
+            done
+            echo ""
+            ;;
     esac
 }
 
@@ -66,16 +66,16 @@ send_notification() {
 }
 
 case "${notification_type}" in
-"permission_prompt" | "PermissionRequest" | "approval-requested")
-    send_notification "🔐 Approval needed" "Ping"
-    ;;
-"idle_prompt")
-    send_notification "💬 Your turn" "Purr"
-    ;;
-"stop" | "Stop" | "agent-turn-complete")
-    send_notification "✅ Done" "Glass"
-    ;;
-*)
-    send_notification "🤖 Codex" ""
-    ;;
+    "permission_prompt" | "PermissionRequest" | "approval-requested")
+        send_notification "🔐 Approval needed" "Ping"
+        ;;
+    "idle_prompt")
+        send_notification "💬 Your turn" "Purr"
+        ;;
+    "stop" | "Stop" | "agent-turn-complete")
+        send_notification "✅ Done" "Glass"
+        ;;
+    *)
+        send_notification "🤖 Codex" ""
+        ;;
 esac
