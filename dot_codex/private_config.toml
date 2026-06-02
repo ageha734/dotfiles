@@ -1,0 +1,63 @@
+model_provider = "amazon-bedrock"
+model = "openai.gpt-5.5"
+model_reasoning_effort = "xhigh"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+notify = ["/bin/bash", "-lc", "~/.codex/notify.sh"]
+project_doc_fallback_filenames = ["CLAUDE.md", "CLAUDE.local.md"]
+
+[model_providers.amazon-bedrock.aws]
+profile = "ai"
+region = "us-east-1"
+
+[shell_environment_policy]
+inherit = "all"
+ignore_default_excludes = false
+exclude = []
+set = { AWS_PROFILE = "ai", AWS_REGION = "us-east-1" }
+include_only = []
+
+[tui]
+notifications = true
+notification_method = "auto"
+notification_condition = "unfocused"
+
+[[hooks.SessionStart]]
+matcher = "startup|resume|clear"
+
+[[hooks.SessionStart.hooks]]
+type = "command"
+command = "~/.codex/hooks/memory-recall.sh"
+timeout = 15
+
+[[hooks.PreToolUse]]
+matcher = "^Bash$"
+
+[[hooks.PreToolUse.hooks]]
+type = "command"
+command = "~/.codex/hooks/secret-guard.sh"
+timeout = 5
+
+[[hooks.PreToolUse.hooks]]
+type = "command"
+command = "~/.codex/hooks/dep-install-guard.sh"
+timeout = 20
+
+[[hooks.PreToolUse.hooks]]
+type = "command"
+command = "~/.codex/hooks/docker-cve-guard.sh"
+timeout = 180
+
+[[hooks.PermissionRequest]]
+matcher = "^Bash$|^apply_patch$|^Edit$|^Write$"
+
+[[hooks.PermissionRequest.hooks]]
+type = "command"
+command = "echo '{\"cwd\": \"'\"$(pwd)\"'\", \"notification_type\": \"permission_prompt\"}' | ~/.codex/notify.sh"
+timeout = 10
+
+[[hooks.Stop]]
+[[hooks.Stop.hooks]]
+type = "command"
+command = "echo '{\"cwd\": \"'\"$(pwd)\"'\", \"notification_type\": \"stop\"}' | ~/.codex/notify.sh"
+timeout = 10
