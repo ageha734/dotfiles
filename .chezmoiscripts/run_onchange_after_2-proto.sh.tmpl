@@ -14,7 +14,7 @@ if ! command -v proto &>/dev/null; then
     bash <(curl -fsSL https://moonrepo.dev/install/proto.sh) --yes
 fi
 
-cd "${HOME}/.proto" && proto use --yes
+proto install --config-mode all --yes
 
 # SDKMAN candidates (Java, Kotlin)
 export SDKMAN_DIR="${HOME}/.sdkman"
