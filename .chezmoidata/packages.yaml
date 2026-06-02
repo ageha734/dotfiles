@@ -181,8 +181,6 @@ packages:
             # Window Management & UI
             - aerospace
             - bartender
-            - borders
-            - sketchybar
 
             # Communication & Social
             - discord
