@@ -16,5 +16,13 @@ fi
 
 proto use --yes
 
+# SDKMAN candidates (Java, Kotlin)
+export SDKMAN_DIR="${HOME}/.sdkman"
+if [ -f "${SDKMAN_DIR}/bin/sdkman-init.sh" ]; then
+    source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+    sdk install java 21.0.7-tem < /dev/null || true
+    sdk install kotlin 2.1.21 < /dev/null || true
+fi
+
 echo "Proto toolchain installation completed."
 {{- end }}
