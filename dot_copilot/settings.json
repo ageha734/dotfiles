@@ -1,0 +1,39 @@
+{
+    "hooks": {
+        "sessionStart": [
+            {
+                "type": "command",
+                "command": "~/.copilot/hooks/memory-recall.sh",
+                "timeoutSec": 15
+            }
+        ],
+        "preToolUse": [
+            {
+                "type": "command",
+                "matcher": "bash",
+                "command": "~/.copilot/hooks/secret-guard.sh",
+                "timeoutSec": 5
+            },
+            {
+                "type": "command",
+                "matcher": "bash",
+                "command": "~/.copilot/hooks/dep-install-guard.sh",
+                "timeoutSec": 20
+            },
+            {
+                "type": "command",
+                "matcher": "bash",
+                "command": "~/.copilot/hooks/docker-cve-guard.sh",
+                "timeoutSec": 180
+            }
+        ],
+        "notification": [
+            {
+                "type": "command",
+                "matcher": "permission_prompt|agent_idle|agent_completed|shell_completed|shell_detached_completed|elicitation_dialog",
+                "command": "~/.copilot/notify.sh",
+                "timeoutSec": 10
+            }
+        ]
+    }
+}
