@@ -60,23 +60,20 @@ README.md
 !.claude/notify.sh
 !.claude/settings.json
 !.claude/compose.ci.yaml
-.clasprc.json
 .claude.json
-.claude.json.backup
 
 # Codex
-.codex/log/*
-.codex/sessions/*
-.codex/tmp/*
-.codex/skills/*
-.codex/version.json
+.codex/*
+!.codex/hooks/
+!.codex/notify.sh
+!.codex/config.toml
+!.codex/compose.ci.yaml
 
 # Copilot
 .copilot/*
 
 # CodeRabbit
-.coderabbit/auth.json
-.coderabbit/logs/*
+.coderabbit/*
 
 # AWS
 .aws/*
