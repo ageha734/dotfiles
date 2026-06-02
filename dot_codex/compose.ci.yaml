@@ -1,0 +1,78 @@
+services:
+    gitleaks:
+        image: zricethezav/gitleaks:v8.21.2@sha256:0e99e8821643ea5b235718642b93bb32486af9c8162c8b8731f7cbdc951a7f46
+        working_dir: /work
+        volumes:
+        - ${SCAN_DIR:-${PWD}}:/work:ro
+        command: [
+            'detect',
+            '--source=/work',
+            '--redact',
+            '--verbose',
+            '--exit-code=1',
+        ]
+
+    trivy-fs:
+        image: aquasec/trivy:0.64.1@sha256:a8ca29078522f30393bdb34225e4c0994d38f37083be81a42da3a2a7e1488e9e
+        working_dir: /work
+        volumes:
+        - ${SCAN_DIR:-${PWD}}:/work:ro
+        - trivy-cache:/root/.cache/trivy
+        entrypoint: ['trivy']
+        command: [
+            'fs',
+            '--scanners=vuln,secret,misconfig',
+            '--severity=CRITICAL,HIGH',
+            '--ignore-unfixed',
+            '--exit-code=1',
+            '/work',
+        ]
+
+    trivy-config:
+        image: aquasec/trivy:0.64.1@sha256:a8ca29078522f30393bdb34225e4c0994d38f37083be81a42da3a2a7e1488e9e
+        working_dir: /work
+        volumes:
+        - ${SCAN_DIR:-${PWD}}:/work:ro
+        - trivy-cache:/root/.cache/trivy
+        entrypoint: ['trivy']
+        command: [
+            'config',
+            '--severity=CRITICAL,HIGH',
+            '--exit-code=1',
+            '/work',
+        ]
+
+    trivy-image:
+        image: aquasec/trivy:0.64.1@sha256:a8ca29078522f30393bdb34225e4c0994d38f37083be81a42da3a2a7e1488e9e
+        volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - trivy-cache:/root/.cache/trivy
+        entrypoint: ['trivy']
+        command: [
+            'image',
+            '--severity=CRITICAL,HIGH',
+            '--ignore-unfixed',
+            '--exit-code=1',
+            '${IMAGE:-}',
+        ]
+
+    syft:
+        image: anchore/syft:v1.18.1@sha256:b8c170b8e51bfc4779ec3ef4399942c57290f5ce76a9c3af564c9d00d4946a6b
+        working_dir: /work
+        volumes:
+        - ${SCAN_DIR:-${PWD}}:/work:ro
+        entrypoint: ['syft']
+        command: ['dir:/work', '-o', 'json']
+
+    grype:
+        image: anchore/grype:v0.86.1@sha256:0c38ef49c355345ebd52a967e54699a6ce2eaaff92ed10928ee280103d6429da
+        working_dir: /work
+        volumes:
+        - ${SCAN_DIR:-${PWD}}:/work:ro
+        - grype-db:/.cache/grype
+        entrypoint: ['grype']
+        command: ['dir:/work', '--fail-on=high', '--only-fixed']
+
+volumes:
+    trivy-cache:
+    grype-db:
