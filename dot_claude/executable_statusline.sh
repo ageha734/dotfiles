@@ -62,7 +62,7 @@ if [ -n "$used_pct" ]; then
 
   exceeds=$(echo "$input" | jq -r 'if .context_window.current_usage != null then (.context_window.current_usage.input_tokens // 0) > 200000 else false end')
   if [ "$exceeds" = "true" ]; then
-    line2="${line2}  ⚠ ctx超過"
+    line2="${line2}  ⚠ ctx exceeded"
   fi
 fi
 

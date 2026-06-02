@@ -32,16 +32,16 @@ if printf '%s' "$CMD" | grep -qE '\b(npm|pnpm|yarn)\b'; then
       name="${tok%@*}"
     fi
     if [ -z "$spec" ]; then
-      hook_deny "npm: '$name' のバージョンが固定されていません。'$name@X.Y.Z' の完全固定で指定してください。"
+      hook_deny "npm: '$name' has no pinned version. Use '$name@X.Y.Z' with an exact version."
     fi
     if ! [[ "$spec" =~ $EXACT_NPM ]]; then
-      hook_deny "npm: '$name@$spec' は固定バージョンではありません(範囲/latest/dist-tag不可)。X.Y.Z で指定してください。"
+      hook_deny "npm: '$name@$spec' is not an exact version (ranges/latest/dist-tags not allowed). Specify X.Y.Z."
     fi
     enc="${name/\//%2f}"
     ts=$(curl -fsSL --max-time 8 "https://registry.npmjs.org/${enc}" 2>/dev/null \
       | python3 -c "import sys,json;print(json.load(sys.stdin).get('time',{}).get('$spec',''))" 2>/dev/null)
     if [ -n "$ts" ]; then
-      release_is_too_fresh "$ts" && add_warn "npm '$name@$spec' はリリースから${RELEASE_THRESHOLD_DAYS}日未満です(供給網攻撃の初動に注意)。"
+      release_is_too_fresh "$ts" && add_warn "npm '$name@$spec' was released less than ${RELEASE_THRESHOLD_DAYS} days ago (beware of supply-chain attacks)."
     fi
   done
 fi
@@ -53,16 +53,16 @@ if printf '%s' "$CMD" | grep -qE '\bpip3?[[:space:]]+install|python3?[[:space:]]
     case "$tok" in -*) continue ;; esac
     if [ -z "$tok" ]; then continue; fi
     if [[ "$tok" == *"*"* ]] || [[ "$tok" =~ (\>|\<|~=|!=|,) ]]; then
-      hook_deny "pip: '$tok' は範囲/ワイルドカード指定です。'pkg==X.Y.Z' の完全固定にしてください。"
+      hook_deny "pip: '$tok' uses a range/wildcard. Pin to an exact version with 'pkg==X.Y.Z'."
     fi
     if ! [[ "$tok" =~ ^[A-Za-z0-9._-]+(\[[^]]+\])?==[^*,]+$ ]]; then
-      hook_deny "pip: '$tok' はバージョン固定(==X.Y.Z)されていません。"
+      hook_deny "pip: '$tok' is not pinned (==X.Y.Z required)."
     fi
     pkg="${tok%%[==\[]*}"; ver="${tok##*==}"
     ts=$(curl -fsSL --max-time 8 "https://pypi.org/pypi/${pkg}/${ver}/json" 2>/dev/null \
       | python3 -c "import sys,json;u=json.load(sys.stdin).get('urls',[]);print(min((x['upload_time_iso_8601'] for x in u), default=''))" 2>/dev/null)
     if [ -n "$ts" ]; then
-      release_is_too_fresh "$ts" && add_warn "pip '$pkg==$ver' はリリースから${RELEASE_THRESHOLD_DAYS}日未満です。"
+      release_is_too_fresh "$ts" && add_warn "pip '$pkg==$ver' was released less than ${RELEASE_THRESHOLD_DAYS} days ago."
     fi
   done
 fi
@@ -74,10 +74,10 @@ if printf '%s' "$CMD" | grep -qE '\bgem[[:space:]]+install'; then
     gemver=$(printf '%s' "$CMD" | grep -oE 'install[[:space:]]+[^[:space:]]+:[^[:space:]]+' | sed -E 's/.*://')
   fi
   if [ -z "$gemver" ]; then
-    hook_deny "gem: バージョンが指定されていません。'gem install foo -v 1.2.3' のように固定してください。"
+    hook_deny "gem: No version specified. Pin with 'gem install foo -v 1.2.3'."
   fi
   if [[ "$gemver" =~ (\>|\<|~|=|,|\*) ]] || ! [[ "$gemver" =~ $EXACT_GEM ]]; then
-    hook_deny "gem: '$gemver' は固定バージョンではありません(範囲/演算子不可)。"
+    hook_deny "gem: '$gemver' is not an exact version (ranges/operators not allowed)."
   fi
 fi
 
@@ -88,20 +88,20 @@ if printf '%s' "$CMD" | grep -qE '\bgo[[:space:]]+(get|install)\b'; then
     case "$tok" in -*) continue ;; esac
     [ -z "$tok" ] && continue
     if [[ "$tok" != *"@"* ]]; then
-      hook_deny "go: '$tok' にバージョン/コミットハッシュ指定がありません(@latest相当)。'@vX.Y.Z' か '@<commit-hash>' で固定してください。"
+      hook_deny "go: '$tok' has no version/commit hash (equivalent to @latest). Pin with '@vX.Y.Z' or '@<commit-hash>'."
     fi
     gover="${tok##*@}"
     if [[ "$gover" =~ $GO_HASH ]] || [[ "$gover" =~ $GO_SEMVER ]] || [[ "$gover" =~ $GO_PSEUDO ]]; then
       :
     else
-      hook_deny "go: '$tok' は固定指定ではありません(@latest/@master/@vメジャーのみ 不可)。"
+      hook_deny "go: '$tok' is not pinned (@latest/@master/major-only not allowed)."
     fi
   done
   if [ -n "${GOPROXY:-}" ]; then
     if [[ "$GOPROXY" != *golang.flatt.tech* ]]; then
-      add_warn "GOPROXY が golang.flatt.tech を指していません。"
+      add_warn "GOPROXY does not point to golang.flatt.tech."
     elif [[ "$GOPROXY" =~ (\||,)[[:space:]]*direct ]]; then
-      add_warn "GOPROXY に ',direct' が付いており golang.flatt.tech を迂回できます。direct を外してください。"
+      add_warn "GOPROXY includes ',direct' which can bypass golang.flatt.tech. Remove the direct fallback."
     fi
   fi
 fi

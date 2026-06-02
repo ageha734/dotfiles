@@ -41,7 +41,7 @@ except Exception:
 python3 -c '
 import json, sys
 memo = sys.argv[1]
-ctx = "## 過去の学習メモ(Qdrant メモリより自動想起)\n" + memo + "\n\n(さらに関連記憶が必要なら qdrant-find ツールで意味検索できます)"
+ctx = "## Past learning notes (auto-recalled from Qdrant memory)\n" + memo + "\n\n(Use the qdrant-find tool for semantic search if you need more related memories)"
 print(json.dumps({"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": ctx}}))
 ' "$memo" 2>/dev/null || exit 0
 

@@ -52,13 +52,13 @@ send_notification() {
 
 case "${notification_type}" in
   "permission_prompt"|"PermissionRequest"|"approval-requested")
-    send_notification "🔐 確認が必要です" "Ping"
+    send_notification "🔐 Approval needed" "Ping"
     ;;
   "idle_prompt")
-    send_notification "💬 あなたの出番です" "Purr"
+    send_notification "💬 Your turn" "Purr"
     ;;
   "stop"|"Stop"|"agent-turn-complete")
-    send_notification "✅ 完了しました" "Glass"
+    send_notification "✅ Done" "Glass"
     ;;
   *)
     send_notification "🤖 Codex" ""
