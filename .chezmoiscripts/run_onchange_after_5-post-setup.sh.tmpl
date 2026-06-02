@@ -1,0 +1,35 @@
+{{- if (eq .chezmoi.os "darwin") -}}
+#!/bin/bash
+
+# yazi/package.toml hash: {{ include "dot_config/yazi/package.toml" | sha256sum }}
+
+set -euo pipefail
+
+echo "Running post-setup tasks..."
+
+# Screenshots directory
+mkdir -p "${HOME}/Pictures/Screenshots"
+
+# git-secrets global configuration
+if command -v git-secrets &>/dev/null; then
+    if ! git config --global --get-all secrets.providers 2>/dev/null | grep -q "aws"; then
+        git secrets --register-aws --global
+    fi
+    git config --global init.templateDir ~/.git-templates/git-secrets
+fi
+
+# Yazi plugins
+if command -v ya &>/dev/null; then
+    echo "Installing Yazi plugins..."
+    ya pack -i 2>/dev/null || true
+fi
+
+# Brew services
+if command -v brew &>/dev/null; then
+    echo "Starting brew services..."
+    brew services start borders 2>/dev/null || true
+    brew services start sketchybar 2>/dev/null || true
+fi
+
+echo "Post-setup tasks completed."
+{{- end }}

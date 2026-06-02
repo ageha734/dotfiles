@@ -27,8 +27,6 @@
 {{-   if hasKey .git "signingkey" -}}
 {{-     $signingkey = .git.signingkey -}}
 {{-   end -}}
-{{- else if not (env "CI") -}}
-{{-   $signingkey = promptString "git signing key (ssh public key)" -}}
 {{- end -}}
 
 [data]

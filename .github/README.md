@@ -8,22 +8,9 @@
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ageha734/dotfiles
 ```
 
-自動的に以下がセットアップされます:
-
-- Homebrew + 全パッケージ/cask/フォント
-- fish シェル + fisher プラグイン
-- proto ツールチェーン (Go, Node, Rust, Terraform, kubectl など)
-- tmux + プラグイン (tpm)
-- SDKMAN (Java, Kotlin)
-- bat テーマ
-- Cursor 拡張機能
-- macOS システム設定 (Dock, Finder, キーボード等)
-
 ### 2. 手動セットアップ
 
 #### 1Password
-
-1Password にログインし、SSH agent を有効化する。
 
 ```bash
 # 1Password CLI 認証
@@ -47,21 +34,13 @@ Mac App Store アプリが必要な場合は Apple ID でログインする。
 | -------- | ---- |
 | パッケージ | `brew bundle` (`.chezmoidata/packages.yaml`) |
 | dotfiles | chezmoi |
-| fish プラグイン | fisher (`fish_plugins`) |
-| ランタイム | proto (`.prototools`) |
+| fish プラグイン | fisher |
+| ランタイム | proto |
 | tmux プラグイン | tpm |
 | Java/Kotlin | SDKMAN |
 | macOS 設定 | `defaults write` |
 | Cursor 拡張 | `cursor --install-extension` |
-| 外部リソース | `.chezmoiexternal.toml` (bat テーマ, tpm) |
-
-## CI
-
-`compose.ci.yaml` で以下の lint/security チェックを実行:
-
-actionlint, zizmor, shellcheck, shfmt, dprint, yamllint, fish-lint,
-taplo, semgrep, trivy, gitleaks, trufflehog, detect-secrets,
-supply-chain, permissions-check
+| 外部リソース | `.chezmoiexternal.toml` |
 
 ## Setup Check
 
