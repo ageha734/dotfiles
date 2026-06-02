@@ -55,6 +55,11 @@ README.md
 
 # Claude Code
 .claude/*
+!.claude/hooks/
+!.claude/statusline.sh
+!.claude/notify.sh
+!.claude/settings.json
+!.claude/compose.ci.yaml
 .clasprc.json
 .claude.json
 .claude.json.backup
