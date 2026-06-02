@@ -18,8 +18,6 @@ README.md
 .atuin/*
 .bun/*
 .cargo/*
-.cursor/*
-!.cursor/cli-config.json
 .docker/*
 !.docker/config.json
 !.docker/daemon.json
@@ -75,6 +73,10 @@ README.md
 !.copilot/notify.sh
 !.copilot/settings.json
 !.copilot/compose.ci.yaml
+
+# Cursor
+.cursor/*
+!.cursor/cli-config.json
 
 # CodeRabbit
 .coderabbit/*
