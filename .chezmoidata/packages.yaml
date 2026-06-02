@@ -101,6 +101,9 @@ packages:
                 neovim:
                 hurl:
 
+                # AI
+                copilot:
+
                 # Terminal & Shell
                 atuin:
                 bat:
@@ -158,9 +161,11 @@ packages:
             - one-switch
             - raycast
 
-            # Development Tools
+            # AI
             - cursor
             - claude-code
+            - coderabbit
+            - codex
 
             # Cloud & Infrastructure
             - docker
