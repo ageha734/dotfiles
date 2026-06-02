@@ -8,39 +8,39 @@
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ageha734/dotfiles
 ```
 
-### 2. 手動セットアップ
+### 2. Manual setup
 
 #### 1Password
 
 ```bash
-# 1Password CLI 認証
+# Authenticate 1Password CLI
 op signin
 
-# Git 署名鍵を設定
+# Set git signing key
 git config --global user.signingkey "$(op item get 'GitHub SSH' --fields 'public key')"
 ```
 
 #### Apple ID
 
-Mac App Store アプリが必要な場合は Apple ID でログインする。
+Sign in with Apple ID if you need Mac App Store apps.
 
-#### macOS 設定の反映
+#### macOS settings
 
-一部の設定は再ログインまたは再起動後に反映される。
+Some settings require a re-login or reboot to take effect.
 
-## 管理対象
+## What's managed
 
-| カテゴリ        | 方法                                         |
-| --------------- | -------------------------------------------- |
-| パッケージ      | `brew bundle` (`.chezmoidata/packages.yaml`) |
-| dotfiles        | chezmoi                                      |
-| fish プラグイン | fisher                                       |
-| ランタイム      | proto                                        |
-| tmux プラグイン | tpm                                          |
-| Java/Kotlin     | SDKMAN                                       |
-| macOS 設定      | `defaults write`                             |
-| Cursor 拡張     | `cursor --install-extension`                 |
-| 外部リソース    | `.chezmoiexternal.toml`                      |
+| Category       | Method                                       |
+| -------------- | -------------------------------------------- |
+| Packages       | `brew bundle` (`.chezmoidata/packages.yaml`) |
+| Dotfiles       | chezmoi                                      |
+| Fish plugins   | fisher                                       |
+| Runtimes       | proto                                        |
+| Tmux plugins   | tpm                                          |
+| Java/Kotlin    | SDKMAN                                       |
+| macOS settings | `defaults write`                             |
+| Cursor exts    | `cursor --install-extension`                 |
+| External deps  | `.chezmoiexternal.toml`                      |
 
 ## Setup Check
 

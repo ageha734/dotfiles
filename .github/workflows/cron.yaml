@@ -45,16 +45,15 @@ jobs:
 
         - name: Update README with latest run date
           run: |
-              current_date=$(date -u +'%Y年%m月%d日')
+              current_date=$(date -u +'%Y-%m-%d')
               sed -i '/<!-- last-check-start -->/,/<!-- last-check-end -->/{
                 /<!-- last-check-start -->/!{/<!-- last-check-end -->/!d}
               }' README.md
               sed -i "/<!-- last-check-start -->/a\\
-              ✅ **${current_date}** に動作確認済み\\
-              🔒 **${current_date}** にセキュリティ確認済み" README.md
+              Last verified: **${current_date}**" README.md
 
         - name: Commit and push
           uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
           with:
-              commit_message: 'docs: 最終動作確認日とセキュリティ確認日を更新'
+              commit_message: 'docs: update last verified date'
               file_pattern: README.md
