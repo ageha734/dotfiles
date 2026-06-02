@@ -22,10 +22,22 @@
 
 {{- $hostname := .chezmoi.hostname -}}
 
+{{- $signingkey := "" -}}
+{{- if hasKey . "git" -}}
+{{-   if hasKey .git "signingkey" -}}
+{{-     $signingkey = .git.signingkey -}}
+{{-   end -}}
+{{- else if not (env "CI") -}}
+{{-   $signingkey = promptString "git signing key (ssh public key)" -}}
+{{- end -}}
+
 [data]
     email = {{ $email | quote }}
     work = {{ $work }}
     hostname = {{ $hostname | quote }}
+
+[data.git]
+    signingkey = {{ $signingkey | quote }}
 
 [passwordManager]
 command = "op"
