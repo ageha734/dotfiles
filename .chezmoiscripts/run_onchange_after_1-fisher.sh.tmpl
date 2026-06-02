@@ -1,0 +1,24 @@
+{{- if (eq .chezmoi.os "darwin") -}}
+#!/bin/bash
+
+# fish_plugins hash: {{ include "dot_config/private_fish/fish_plugins" | sha256sum }}
+
+set -euo pipefail
+
+echo "Installing fish plugins via fisher..."
+
+if ! command -v fish &>/dev/null; then
+    echo "fish is not installed. Skipping."
+    exit 0
+fi
+
+fish -c '
+    if not functions -q fisher
+        curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source
+        fisher install jorgebucaran/fisher
+    end
+    fisher update
+'
+
+echo "Fish plugins installation completed."
+{{- end }}
