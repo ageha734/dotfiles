@@ -71,6 +71,10 @@ README.md
 
 # Copilot
 .copilot/*
+!.copilot/hooks/
+!.copilot/notify.sh
+!.copilot/settings.json
+!.copilot/compose.ci.yaml
 
 # CodeRabbit
 .coderabbit/*
