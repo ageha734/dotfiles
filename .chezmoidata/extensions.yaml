@@ -85,3 +85,4 @@ extensions:
         # Themes & UI
         - antfu.icons-carbon
         - catppuccin.catppuccin-vsc-icons
+        remote_paths: []
