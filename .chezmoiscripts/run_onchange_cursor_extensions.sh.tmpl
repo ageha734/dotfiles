@@ -1,13 +1,18 @@
 #!/bin/bash
 
-# hash {{ .extensions.cursor | toJson | sha256sum }}
+{{- $cursor := dict -}}
+{{- if and (hasKey . "extensions") (hasKey .extensions "cursor") -}}
+{{-   $cursor = .extensions.cursor -}}
+{{- end -}}
+# hash {{ $cursor | toJson | sha256sum }}
 
 {{ if lookPath "cursor" -}}
 echo "Installing Cursor extensions..."
 
 INSTALLED_EXTENSIONS=$(cursor --list-extensions)
 
-{{ range .extensions.cursor.ext_ids -}}
+{{ if hasKey $cursor "ext_ids" -}}
+{{ range $cursor.ext_ids -}}
 if ! echo "$INSTALLED_EXTENSIONS" | grep -q "^{{ . }}$"; then
   echo "Installing extension: {{ . }}"
   cursor --install-extension "{{ . }}" --force
@@ -15,12 +20,15 @@ else
   echo "Extension already installed: ~{{ . }}"
 fi
 {{ end -}}
+{{ end -}}
 
-{{ range .extensions.cursor.remote_paths -}}
+{{ if hasKey $cursor "remote_paths" -}}
+{{ range $cursor.remote_paths -}}
 echo "Installing extension: {{ . }}"
 curl -L -o "$(basename {{ . }})" "{{ . }}"
 cursor --install-extension "$(basename {{ . }})"
 rm "$(basename {{ . }})"
+{{ end -}}
 {{ end -}}
 
 echo "Cursor extensions installation completed."
