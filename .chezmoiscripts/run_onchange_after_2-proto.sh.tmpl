@@ -5,24 +5,24 @@
 
 set -euo pipefail
 
-echo "Installing proto toolchain..."
+# echo "Installing proto toolchain..."
 
-PROTO_HOME="${HOME}/.local/share/proto"
-export PATH="${PROTO_HOME}/shims:${PROTO_HOME}/bin:${PATH}"
+# PROTO_HOME="${HOME}/.local/share/proto"
+# export PATH="${PROTO_HOME}/shims:${PROTO_HOME}/bin:${PATH}"
 
-if ! command -v proto &>/dev/null; then
-    bash <(curl -fsSL https://moonrepo.dev/install/proto.sh) --yes
-fi
+# if ! command -v proto &>/dev/null; then
+#     bash <(curl -fsSL https://moonrepo.dev/install/proto.sh) --yes
+# fi
 
-proto install --config-mode all --yes
+# proto install --config-mode all --yes
 
-# SDKMAN candidates (Java, Kotlin)
-export SDKMAN_DIR="${HOME}/.sdkman"
-if [ -f "${SDKMAN_DIR}/bin/sdkman-init.sh" ]; then
-    source "${SDKMAN_DIR}/bin/sdkman-init.sh"
-    sdk install java 21.0.7-tem < /dev/null || true
-    sdk install kotlin 2.1.21 < /dev/null || true
-fi
+# # SDKMAN candidates (Java, Kotlin)
+# export SDKMAN_DIR="${HOME}/.sdkman"
+# if [ -f "${SDKMAN_DIR}/bin/sdkman-init.sh" ]; then
+#     source "${SDKMAN_DIR}/bin/sdkman-init.sh"
+#     sdk install java 21.0.7-tem < /dev/null || true
+#     sdk install kotlin 2.1.21 < /dev/null || true
+# fi
 
 echo "Proto toolchain installation completed."
 {{- end }}
