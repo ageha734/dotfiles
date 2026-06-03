@@ -24,3 +24,11 @@ jobs:
               branch-prefix: 'deps/proto'
               automerge-label: 'automerge'
               dashboard: 'true'
+
+        - uses: ageha734/proto-grove@6138e86551684ad85998d1405bd303d95a024fb8 # v1.0.1
+          with:
+              prototools-path: 'dot_local/share/proto/dot_prototools'
+              github-token: ${{ secrets.GITHUB_TOKEN }}
+              branch-prefix: 'deps/proto'
+              automerge-label: 'automerge'
+              dashboard: 'true'
