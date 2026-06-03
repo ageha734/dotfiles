@@ -58,6 +58,7 @@ hyperfine = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads
 kubeconform = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/kubeconform.toml"
 kubectl = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/kubectl.toml"
 kubectx = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/kubectx.toml"
+kubens = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/kubens.toml"
 kustomize = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/kustomize.toml"
 lefthook = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/lefthook.toml"
 pinact = "https://raw.githubusercontent.com/ageha734/proto-plugins/refs/heads/master/toml/pinact.toml"
